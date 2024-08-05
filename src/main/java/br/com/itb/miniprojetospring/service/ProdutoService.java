@@ -1,11 +1,11 @@
-package br.com.itb.miniprojeto3cspring.service;
+package br.com.itb.miniprojetospring.service;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import br.com.itb.miniprojeto3cspring.model.Produto;
-import br.com.itb.miniprojeto3cspring.model.ProdutoRepository;
+import br.com.itb.miniprojetospring.model.Produto;
+import br.com.itb.miniprojetospring.model.ProdutoRepository;
 import jakarta.transaction.Transactional;
 
 @Service

@@ -1,4 +1,4 @@
-package br.com.itb.miniprojeto3cspring.model;
+package br.com.itb.miniprojetospring.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

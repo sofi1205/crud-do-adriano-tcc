@@ -1,10 +1,10 @@
-package br.com.itb.miniprojeto3cspring;
+package br.com.itb.miniprojetospring;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Miniprojeto3cspringApplicationTests {
+class MiniprojetospringApplicationTests {
 
 	@Test
 	void contextLoads() {

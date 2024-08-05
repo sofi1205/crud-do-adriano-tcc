@@ -1,4 +1,4 @@
-package br.com.itb.miniprojeto3cspring.control;
+package br.com.itb.miniprojetospring.control;
 
 import java.util.List;
 
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.itb.miniprojeto3cspring.model.Produto;
-import br.com.itb.miniprojeto3cspring.service.ProdutoService;
+import br.com.itb.miniprojetospring.model.Produto;
+import br.com.itb.miniprojetospring.service.ProdutoService;
 
 @RestController
 @CrossOrigin(origins="*", maxAge = 3600, allowCredentials = "false")
