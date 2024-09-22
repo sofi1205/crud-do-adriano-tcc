@@ -10,6 +10,15 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="Produto")
 public class Produto {
+
+	Produto(){
+
+	}
+
+	public Produto(long id, String nome){
+		this.id = id;
+		this.nome = nome;
+	}
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

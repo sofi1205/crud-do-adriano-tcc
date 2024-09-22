@@ -30,6 +30,19 @@ public class ProdutoService {
 		List<Produto> lista = produtoRepository.findAll();
 		return lista;
 	}
-	
-	
+
+	public Produto findAllById(long id){
+		Produto produtoEncontrado = produtoRepository.findAllById(id);
+		return produtoEncontrado;
+	}
+
+	@Transactional
+	public Produto update(Produto _produto) {
+		Produto produtoEncontrado = produtoRepository.findAllById(_produto.getId());
+		if(produtoEncontrado.getId() > 0)
+			return produtoRepository.save(_produto);
+		else
+			return new Produto(0, "Produto não encontrado");
+	}
+
 }

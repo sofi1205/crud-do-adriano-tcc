@@ -4,12 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import br.com.itb.miniprojetospring.model.Produto;
 import br.com.itb.miniprojetospring.service.ProdutoService;
@@ -40,7 +35,11 @@ public class ProdutoController {
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(produtoService.findAll());
 	}
-	
-	
+
+	@PutMapping
+	public ResponseEntity<Object> updateProduto(@RequestBody Produto produto){
+		return ResponseEntity.status(HttpStatus.CREATED)
+				.body(produtoService.update(produto));
+	}
 	
 }
