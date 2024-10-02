@@ -9,5 +9,5 @@ public class MiniprojetospringApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MiniprojetospringApplication.class, args);
 	}
-	//oi
+	//teste2 sofia
 }
