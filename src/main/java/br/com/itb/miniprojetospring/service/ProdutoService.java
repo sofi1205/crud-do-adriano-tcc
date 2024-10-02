@@ -11,7 +11,7 @@ import jakarta.transaction.Transactional;
 @Service
 public class ProdutoService {
 	
-	// Criar objeto repository
+	// Criar objeto repositoryf
 	final ProdutoRepository produtoRepository;
 	
 	// Injeção de Dependência
