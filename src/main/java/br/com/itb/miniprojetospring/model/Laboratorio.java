@@ -1,6 +1,5 @@
 package br.com.itb.miniprojetospring.model;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,14 +7,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="Produto")
-public class Produto {
+@Table(name="Laboratorio")
+public class Laboratorio {
 
-	Produto(){
+	Laboratorio(){
 
 	}
 
-	public Produto(long id, String nome){
+	public Laboratorio(long id, String nome){
 		this.id = id;
 		this.nome = nome;
 	}
@@ -32,7 +31,7 @@ public class Produto {
 	private String categoria;
 	private String destaque;
 	private String statusProd;
-	
+
 	// CRIAR GETTERS E SETTERS
 	public long getId() {
 		return id;
