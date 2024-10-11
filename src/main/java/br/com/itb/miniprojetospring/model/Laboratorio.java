@@ -1,10 +1,6 @@
 package br.com.itb.miniprojetospring.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="Laboratorio")
@@ -21,9 +17,10 @@ public class Laboratorio {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long id;	
+	@Column (name = "Id_Laboratorio")
+	private long id;
 
-	private String nome;    
+	private String nome;
 	private String descricao;	 
 	private String codigoBarras;
 	private byte[] foto;		 
