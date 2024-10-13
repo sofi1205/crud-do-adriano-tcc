@@ -10,37 +10,25 @@ public class Ocorrencia {
 
     }
 
-    public Ocorrencia(long id, String nome){
+    public Ocorrencia(long id, String patrimonio){
         this.id = id;
-        this.nome = nome;
+        this.patrimonio = patrimonio;
     }
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column (name = "Id_Laboratorio")
+    @Column (name = "Id_Ocorrencia")
     private long id;
 
-    private String nome;
     private String descricao;
-    private String codigoBarras;
-    private byte[] foto;
-    private double preco;
-    private String categoria;
-    private String destaque;
-    private String statusProd;
+    private String patrimonio;
+    private byte[] anexo;
+    private String statusocorrencia;
 
     // CRIAR GETTERS E SETTERS
-    public long getId() {
-        return id;
-    }
+    public long getId() {return id;}
     public void setId(long id) {
         this.id = id;
-    }
-    public String getNome() {
-        return nome;
-    }
-    public void setNome(String nome) {
-        this.nome = nome;
     }
     public String getDescricao() {
         return descricao;
@@ -48,42 +36,18 @@ public class Ocorrencia {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    public String getCodigoBarras() {
-        return codigoBarras;
+    public String getPatrimonio() {
+        return patrimonio;
     }
-    public void setCodigoBarras(String codigoBarras) {
-        this.codigoBarras = codigoBarras;
+    public void setPatrimonio(String patrimonio) {
+        this.patrimonio = patrimonio;
     }
-    public byte[] getFoto() {
-        return foto;
+    public byte[] getAnexo() {
+        return anexo;
     }
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
-    }
-    public double getPreco() {
-        return preco;
-    }
-    public void setPreco(double preco) {
-        this.preco = preco;
-    }
-    public String getCategoria() {
-        return categoria;
-    }
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-    public String getDestaque() {
-        return destaque;
-    }
-    public void setDestaque(String destaque) {
-        this.destaque = destaque;
-    }
-    public String getStatusProd() {
-        return statusProd;
-    }
-    public void setStatusProd(String statusProd) {
-        this.statusProd = statusProd;
-    }
+    public void setAnexo(byte[] anexo) {this.anexo = anexo;}
+    public String getStatusocorrencia() {return statusocorrencia;}
+    public void setStatusocorrencia(String statusocorrencia) {this.statusocorrencia = statusocorrencia;}
 
 
 

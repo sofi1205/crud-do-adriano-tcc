@@ -10,9 +10,9 @@ public class Laboratorio {
 
 	}
 
-	public Laboratorio(long id, String nome){
+	public Laboratorio(long id, String sala){
 		this.id = id;
-		this.nome = nome;
+		this.sala = sala;
 	}
 	
 	@Id
@@ -20,14 +20,8 @@ public class Laboratorio {
 	@Column (name = "Id_Laboratorio")
 	private long id;
 
-	private String nome;
-	private String descricao;	 
-	private String codigoBarras;
-	private byte[] foto;		 
-	private double preco;		 
-	private String categoria;
-	private String destaque;
-	private String statusProd;
+	private String sala;
+	private String andar;
 
 	// CRIAR GETTERS E SETTERS
 	public long getId() {
@@ -36,58 +30,18 @@ public class Laboratorio {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public String getNome() {
-		return nome;
+	public String getSala() {
+		return sala;
 	}
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setSala(String sala) {
+		this.sala = sala;
 	}
-	public String getDescricao() {
-		return descricao;
+	public String getAndar() {
+		return andar;
 	}
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setAndar(String andar) {
+		this.andar = andar;
 	}
-	public String getCodigoBarras() {
-		return codigoBarras;
-	}
-	public void setCodigoBarras(String codigoBarras) {
-		this.codigoBarras = codigoBarras;
-	}
-	public byte[] getFoto() {
-		return foto;
-	}
-	public void setFoto(byte[] foto) {
-		this.foto = foto;
-	}
-	public double getPreco() {
-		return preco;
-	}
-	public void setPreco(double preco) {
-		this.preco = preco;
-	}
-	public String getCategoria() {
-		return categoria;
-	}
-	public void setCategoria(String categoria) {
-		this.categoria = categoria;
-	}
-	public String getDestaque() {
-		return destaque;
-	}
-	public void setDestaque(String destaque) {
-		this.destaque = destaque;
-	}
-	public String getStatusProd() {
-		return statusProd;
-	}
-	public void setStatusProd(String statusProd) {
-		this.statusProd = statusProd;
-	}
-	
-	
-	
-	
-	
-	
+
+
 }
