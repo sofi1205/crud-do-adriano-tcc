@@ -31,10 +31,11 @@ public class LaboratorioController {
 	
 	// ROTA GET
 	@GetMapping
-	public ResponseEntity<List<Laboratorio>> getAllLaboratorios(){
+	public ResponseEntity<List<Laboratorio>> getAllLaboratorios() {
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(laboratorioService.findAll());
 	}
+
 
 	@PutMapping
 	public ResponseEntity<Object> updateLaboratorio(@RequestBody Laboratorio laboratorio){
