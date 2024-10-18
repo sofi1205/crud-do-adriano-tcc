@@ -18,6 +18,7 @@ public class LaboratorioService {
 	public LaboratorioService(LaboratorioRepository _laboratorioRepository) {
 		this.laboratorioRepository = _laboratorioRepository;
 	}
+
 	
 	// Método INSERT INTO PRODUTO
 	@Transactional
@@ -37,12 +38,30 @@ public class LaboratorioService {
 	}
 
 	@Transactional
-	public Laboratorio update(Laboratorio _laboratorio) {
-		Laboratorio laboratorioEncontrado = laboratorioRepository.findAllById(_laboratorio.getId());
-		if(laboratorioEncontrado.getId() > 0)
-			return laboratorioRepository.save(_laboratorio);
-		else
-			return new Laboratorio(0, "Laboratório não encontrado");
+	public Laboratorio update(Long id, Laboratorio laboratorio) {
+		Laboratorio laboratorioEncontrado = laboratorioRepository.findById(id)
+				.orElseThrow(() -> new RuntimeException("Laboratório não encontrado"));
+
+		// Verifica se já existe um laboratório com a mesma sala e andar, mas com id diferente
+		boolean exists = laboratorioRepository.findAll().stream()
+				.anyMatch(lab -> lab.getSala().equals(laboratorio.getSala())
+						&& lab.getAndar().equals(laboratorio.getAndar())
+						&& lab.getId() != id); // Garantir que não está comparando o mesmo id
+
+		if (exists) {
+			throw new RuntimeException("Já existe um laboratório com a mesma sala e andar.");
+		}
+
+		laboratorioEncontrado.setSala(laboratorio.getSala());
+		laboratorioEncontrado.setAndar(laboratorio.getAndar());
+
+		return laboratorioRepository.save(laboratorioEncontrado);
 	}
 
+
+
+
+
+
 }
+
