@@ -48,7 +48,13 @@ public class LaboratorioController {
 				.orElseGet(() -> ResponseEntity.notFound().build());
 	}
 
-	// ROTA PUT (Atualizar laboratório existente)
+	@GetMapping("/verificarDuplicidade")
+	public ResponseEntity<Boolean> verificarDuplicidade(@RequestParam String sala, @RequestParam String andar) {
+		boolean isDuplicated = laboratorioService.isLaboratorioDuplicado(sala, andar);
+		return new ResponseEntity<>(isDuplicated, HttpStatus.OK);
+	}
+
+	// Método para atualizar laboratório
 	@PutMapping("/{id}")
 	public ResponseEntity<Object> updateLaboratorio(@PathVariable Long id, @RequestBody Laboratorio laboratorioDetails) {
 		if (laboratorioService.isLaboratorioDuplicado(laboratorioDetails.getSala(), laboratorioDetails.getAndar())) {
