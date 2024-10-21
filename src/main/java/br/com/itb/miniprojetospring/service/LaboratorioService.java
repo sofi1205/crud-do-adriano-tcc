@@ -10,58 +10,46 @@ import jakarta.transaction.Transactional;
 
 @Service
 public class LaboratorioService {
-	
-	// Criar objeto repositoryg
+
 	final LaboratorioRepository laboratorioRepository;
-	
-	// Injeção de Dependência
+
 	public LaboratorioService(LaboratorioRepository _laboratorioRepository) {
 		this.laboratorioRepository = _laboratorioRepository;
 	}
 
-	
-	// Método INSERT INTO PRODUTO
+	// Método para salvar laboratório
 	@Transactional
 	public Laboratorio save(Laboratorio _laboratorio) {
 		return laboratorioRepository.save(_laboratorio);
 	}
-	
-	// Método SELECT * FROM PRODUTO
-	public List<Laboratorio> findAll(){
-		List<Laboratorio> lista = laboratorioRepository.findAll();
-		return lista;
+
+	// Método para encontrar todos os laboratórios
+	public List<Laboratorio> findAll() {
+		return laboratorioRepository.findAll();
 	}
 
-	public Laboratorio findAllById(long id){
-		Laboratorio laboratorioEncontrado = laboratorioRepository.findAllById(id);
-		return laboratorioEncontrado;
+	// Método para encontrar laboratório por ID
+	public Laboratorio findById(long id) {
+		return laboratorioRepository.findById(id).orElseThrow(() -> new RuntimeException("Laboratório não encontrado"));
 	}
 
+	// Método para atualizar laboratório
 	@Transactional
-	public Laboratorio update(Long id, Laboratorio laboratorio) {
-		Laboratorio laboratorioEncontrado = laboratorioRepository.findById(id)
-				.orElseThrow(() -> new RuntimeException("Laboratório não encontrado"));
-
-		// Verifica se já existe um laboratório com a mesma sala e andar, mas com id diferente
-		boolean exists = laboratorioRepository.findAll().stream()
-				.anyMatch(lab -> lab.getSala().equals(laboratorio.getSala())
-						&& lab.getAndar().equals(laboratorio.getAndar())
-						&& lab.getId() != id); // Garantir que não está comparando o mesmo id
-
-		if (exists) {
-			throw new RuntimeException("Já existe um laboratório com a mesma sala e andar.");
-		}
-
-		laboratorioEncontrado.setSala(laboratorio.getSala());
-		laboratorioEncontrado.setAndar(laboratorio.getAndar());
-
-		return laboratorioRepository.save(laboratorioEncontrado);
+	public Laboratorio update(Long id, Laboratorio laboratorioDetails) {
+		Laboratorio laboratorio = findById(id);
+		laboratorio.setSala(laboratorioDetails.getSala());
+		laboratorio.setAndar(laboratorioDetails.getAndar());
+		return laboratorioRepository.save(laboratorio);
 	}
 
-
-
-
-
-
+	// Verifica se o laboratório é duplicado (mesma sala e andar)
+	public boolean isLaboratorioDuplicado(String sala, String andar) {
+		List<Laboratorio> laboratorios = laboratorioRepository.findAll();
+		for (Laboratorio lab : laboratorios) {
+			if (lab.getSala().equals(sala) && lab.getAndar().equals(andar)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
-
