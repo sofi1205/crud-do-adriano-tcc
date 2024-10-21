@@ -1,6 +1,7 @@
 package br.com.itb.miniprojetospring.control;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,9 +11,10 @@ import br.com.itb.miniprojetospring.model.Laboratorio;
 import br.com.itb.miniprojetospring.service.LaboratorioService;
 
 @RestController
-@CrossOrigin(origins="*", maxAge = 3600, allowCredentials = "false")
+@CrossOrigin(origins="http://localhost:5173", maxAge = 3600, allowCredentials = "false")
 @RequestMapping("/laboratorio")
 public class LaboratorioController {
+
 
 	final LaboratorioService laboratorioService;
 
@@ -38,6 +40,14 @@ public class LaboratorioController {
 				.body(laboratorioService.findAll());
 	}
 
+	// Método para buscar laboratório por ID
+	@GetMapping("/findById/{id}")
+	public ResponseEntity<Laboratorio> findById(@PathVariable Long id) {
+		Optional<Laboratorio> laboratorio = Optional.ofNullable(laboratorioService.findById(id));
+		return laboratorio.map(ResponseEntity::ok)
+				.orElseGet(() -> ResponseEntity.notFound().build());
+	}
+
 	// ROTA PUT (Atualizar laboratório existente)
 	@PutMapping("/{id}")
 	public ResponseEntity<Object> updateLaboratorio(@PathVariable Long id, @RequestBody Laboratorio laboratorioDetails) {
@@ -48,4 +58,14 @@ public class LaboratorioController {
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(laboratorioService.update(id, laboratorioDetails));
 	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> delete(@PathVariable Long id) {
+		if (laboratorioService.existsById(id)) {
+			laboratorioService.deleteById(id);
+			return ResponseEntity.noContent().build();
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+}
 }

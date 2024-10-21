@@ -1,6 +1,7 @@
 package br.com.itb.miniprojetospring.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,8 @@ public class LaboratorioService {
 		return laboratorioRepository.findById(id).orElseThrow(() -> new RuntimeException("Laboratório não encontrado"));
 	}
 
+
+
 	// Método para atualizar laboratório
 	@Transactional
 	public Laboratorio update(Long id, Laboratorio laboratorioDetails) {
@@ -51,5 +54,14 @@ public class LaboratorioService {
 			}
 		}
 		return false;
+	}
+
+
+	public void deleteById(Long id) {
+		laboratorioRepository.deleteById(id);
+	}
+
+	public boolean existsById(Long id) {
+		return laboratorioRepository.existsById(id);
 	}
 }
