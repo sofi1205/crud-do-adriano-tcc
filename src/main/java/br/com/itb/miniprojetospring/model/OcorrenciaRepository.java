@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 public interface OcorrenciaRepository
         extends JpaRepository<Ocorrencia, Long> {
 
-    Laboratorio findAllById(long id);
+    Ocorrencia findAllById(long id);
 }

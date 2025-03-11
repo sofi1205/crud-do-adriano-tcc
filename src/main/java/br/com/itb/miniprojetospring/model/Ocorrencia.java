@@ -25,6 +25,11 @@ public class Ocorrencia {
     private byte[] anexo;
     private String statusocorrencia;
 
+    private String dataAbertura;
+    private String dataAtendimento;
+    private String statusOcorrencia;
+
+
     // CRIAR GETTERS E SETTERS
     public long getId() {return id;}
     public void setId(long id) {
@@ -50,8 +55,27 @@ public class Ocorrencia {
     public void setStatusocorrencia(String statusocorrencia) {this.statusocorrencia = statusocorrencia;}
 
 
+    public String getDataAbertura() {
+        return dataAbertura;
+    }
 
+    public void setDataAbertura(String dataAbertura) {
+        this.dataAbertura = dataAbertura;
+    }
 
+    public String getDataAtendimento() {
+        return dataAtendimento;
+    }
 
+    public void setDataAtendimento(String dataAtendimento) {
+        this.dataAtendimento = dataAtendimento;
+    }
 
+    public String getStatusOcorrencia() {
+        return statusOcorrencia;
+    }
+
+    public void setStatusOcorrencia(String statusOcorrencia) {
+        this.statusOcorrencia = statusOcorrencia;
+    }
 }
