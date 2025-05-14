@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
@@ -25,5 +26,18 @@ public class LaboratorioController {
 	@PostMapping
 	public Laboratorio create(@RequestBody Laboratorio laboratorio) {
 		return laboratorioRepository.save(laboratorio);
+	}
+
+	// PUT: atualiza um laboratório existente
+	@PutMapping("/{id}")
+	public void update(@PathVariable Long id, @RequestBody Laboratorio novoLab) {
+		Optional<Laboratorio> optionalLab = laboratorioRepository.findById(id);
+
+	}
+
+	// DELETE: deleta um laboratório por ID
+	@DeleteMapping("/{id}")
+	public void delete(@PathVariable Long id) {
+		laboratorioRepository.deleteById(id);
 	}
 }
