@@ -1,6 +1,7 @@
 package br.com.itb.miniprojetospring.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "Ocorrencia")
@@ -13,20 +14,28 @@ public class Ocorrencia {
 
     private String descricao;
     private String patrimonio;
+
+    @Lob
     private byte[] anexo;
-    private String statusocorrencia;
+
+    private String statusOcorrencia;
     private String dataAbertura;
     private String dataAtendimento;
-    private String statusOcorrencia;
 
     @ManyToOne
     @JoinColumn(name = "laboratorio_id", referencedColumnName = "Id_Laboratorio")
-    private Laboratorio laboratorio; // Adiciona referência ao Laboratório
+    private Laboratorio laboratorio;
 
-    public Ocorrencia() {
+    public Ocorrencia() {}
+
+    @PrePersist
+    protected void onCreate() {
+        this.dataAbertura = LocalDate.now().toString();
+        this.statusOcorrencia = "Pendente";
     }
 
-    // Getters e Setters
+    // ======== GETTERS E SETTERS ========
+
     public long getId() {
         return id;
     }
@@ -59,12 +68,12 @@ public class Ocorrencia {
         this.anexo = anexo;
     }
 
-    public String getStatusocorrencia() {
-        return statusocorrencia;
+    public String getStatusOcorrencia() {
+        return statusOcorrencia;
     }
 
-    public void setStatusocorrencia(String statusocorrencia) {
-        this.statusocorrencia = statusocorrencia;
+    public void setStatusOcorrencia(String statusOcorrencia) {
+        this.statusOcorrencia = statusOcorrencia;
     }
 
     public String getDataAbertura() {
@@ -81,14 +90,6 @@ public class Ocorrencia {
 
     public void setDataAtendimento(String dataAtendimento) {
         this.dataAtendimento = dataAtendimento;
-    }
-
-    public String getStatusOcorrencia() {
-        return statusOcorrencia;
-    }
-
-    public void setStatusOcorrencia(String statusOcorrencia) {
-        this.statusOcorrencia = statusOcorrencia;
     }
 
     public Laboratorio getLaboratorio() {
