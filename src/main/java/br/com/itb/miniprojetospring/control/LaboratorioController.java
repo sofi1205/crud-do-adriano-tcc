@@ -3,6 +3,7 @@ package br.com.itb.miniprojetospring.control;
 import br.com.itb.miniprojetospring.model.Laboratorio;
 import br.com.itb.miniprojetospring.model.LaboratorioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,14 +31,34 @@ public class LaboratorioController {
 
 	// PUT: atualiza um laboratório existente
 	@PutMapping("/{id}")
-	public void update(@PathVariable Long id, @RequestBody Laboratorio novoLab) {
-		Optional<Laboratorio> optionalLab = laboratorioRepository.findById(id);
-
+	public ResponseEntity<Laboratorio> update(@PathVariable Long id, @RequestBody Laboratorio novoLab) {
+		return laboratorioRepository.findById(id)
+				.map(lab -> {
+					lab.setSala(novoLab.getSala());
+					lab.setAndar(novoLab.getAndar());
+					Laboratorio atualizado = laboratorioRepository.save(lab);
+					return ResponseEntity.ok(atualizado);
+				})
+				.orElse(ResponseEntity.notFound().build());
 	}
 
 	// DELETE: deleta um laboratório por ID
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable Long id) {
 		laboratorioRepository.deleteById(id);
+	}
+
+	// Verifica se o laboratório é duplicado (mesma sala e andar)
+	@GetMapping("/verificarDuplicidade")
+	public boolean verificarDuplicidade(@RequestParam String sala, @RequestParam String andar) {
+		return laboratorioRepository.existsBySalaAndAndar(sala, andar);
+	}
+
+	// Busca laboratório por ID
+	@GetMapping("/findById/{id}")
+	public ResponseEntity<Laboratorio> getById(@PathVariable Long id) {
+		return laboratorioRepository.findById(id)
+				.map(ResponseEntity::ok)
+				.orElse(ResponseEntity.notFound().build());
 	}
 }

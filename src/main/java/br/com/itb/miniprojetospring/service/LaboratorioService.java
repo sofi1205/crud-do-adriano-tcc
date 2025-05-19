@@ -1,7 +1,6 @@
 package br.com.itb.miniprojetospring.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -34,8 +33,6 @@ public class LaboratorioService {
 		return laboratorioRepository.findById(id).orElseThrow(() -> new RuntimeException("Laboratório não encontrado"));
 	}
 
-
-
 	// Método para atualizar laboratório
 	@Transactional
 	public Laboratorio update(Long id, Laboratorio laboratorioDetails) {
@@ -45,17 +42,10 @@ public class LaboratorioService {
 		return laboratorioRepository.save(laboratorio);
 	}
 
-	// Verifica se o laboratório é duplicado (mesma sala e andar)
+	// Método para verificar duplicidade de laboratório
 	public boolean isLaboratorioDuplicado(String sala, String andar) {
-		List<Laboratorio> laboratorios = laboratorioRepository.findAll();
-		for (Laboratorio lab : laboratorios) {
-			if (lab.getSala().equals(sala) && lab.getAndar().equals(andar)) {
-				return true;
-			}
-		}
-		return false;
+		return laboratorioRepository.existsBySalaAndAndar(sala, andar);
 	}
-
 
 	public void deleteById(Long id) {
 		laboratorioRepository.deleteById(id);

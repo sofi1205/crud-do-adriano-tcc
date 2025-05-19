@@ -9,4 +9,8 @@ import java.util.List;
 public interface LaboratorioRepository extends JpaRepository<Laboratorio, Long> {
 
 	List<Laboratorio> findAll();  // Método para listar todos os laboratórios
+
+
+	// Verifica se existe laboratório com a mesma sala e andar
+	boolean existsBySalaAndAndar(String sala, String andar);
 }
