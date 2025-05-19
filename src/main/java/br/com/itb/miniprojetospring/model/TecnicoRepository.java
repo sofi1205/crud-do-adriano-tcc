@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TecnicoRepository
-        extends JpaRepository<Ocorrencia, Long> {
+        extends JpaRepository<Tecnico, Long> {
 
-    Laboratorio findAllById(long id);
 }
