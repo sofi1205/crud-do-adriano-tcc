@@ -1,102 +1,47 @@
 package br.com.itb.miniprojetospring.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
+
+
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "Ocorrencia")
 public class Ocorrencia {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id_Ocorrencia")
-    private long id;
+    private Long id;
 
-    private String descricao;
-    private String patrimonio;
+    @Column(name = "dataatendimento", nullable = false)
+    private LocalDateTime dataAtendimento;
 
-    @Lob
-    private byte[] anexo;
+    @Column(name = "lida", nullable = false)
+    private Boolean lida = false; // Campo para marcar como lida
 
-    private String statusOcorrencia;
-    private String dataAbertura;
-    private String dataAtendimento;
-
-    @ManyToOne
-    @JoinColumn(name = "laboratorio_id", referencedColumnName = "Id_Laboratorio")
-    private Laboratorio laboratorio;
-
-    public Ocorrencia() {}
-
-    @PrePersist
-    protected void onCreate() {
-        this.dataAbertura = LocalDate.now().toString();
-        this.statusOcorrencia = "Pendente";
-    }
-
-    // ======== GETTERS E SETTERS ========
-
-    public long getId() {
+    // Getters e Setters
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public String getPatrimonio() {
-        return patrimonio;
-    }
-
-    public void setPatrimonio(String patrimonio) {
-        this.patrimonio = patrimonio;
-    }
-
-    public byte[] getAnexo() {
-        return anexo;
-    }
-
-    public void setAnexo(byte[] anexo) {
-        this.anexo = anexo;
-    }
-
-    public String getStatusOcorrencia() {
-        return statusOcorrencia;
-    }
-
-    public void setStatusOcorrencia(String statusOcorrencia) {
-        this.statusOcorrencia = statusOcorrencia;
-    }
-
-    public String getDataAbertura() {
-        return dataAbertura;
-    }
-
-    public void setDataAbertura(String dataAbertura) {
-        this.dataAbertura = dataAbertura;
-    }
-
-    public String getDataAtendimento() {
+    public LocalDateTime getDataAtendimento() {
         return dataAtendimento;
     }
 
-    public void setDataAtendimento(String dataAtendimento) {
+    public void setDataAtendimento(LocalDateTime dataAtendimento) {
         this.dataAtendimento = dataAtendimento;
     }
 
-    public Laboratorio getLaboratorio() {
-        return laboratorio;
+    public Boolean getLida() {
+        return lida;
     }
 
-    public void setLaboratorio(Laboratorio laboratorio) {
-        this.laboratorio = laboratorio;
+    public void setLida(Boolean lida) {
+        this.lida = lida;
     }
+
+    // Outros getters e setters conforme sua necessidade
 }

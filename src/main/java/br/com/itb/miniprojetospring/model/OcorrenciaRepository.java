@@ -1,11 +1,8 @@
 package br.com.itb.miniprojetospring.model;
 
+import br.com.itb.miniprojetospring.model.Ocorrencia;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public interface OcorrenciaRepository
-        extends JpaRepository<Ocorrencia, Long> {
-
-    Ocorrencia findAllById(long id);
+public interface OcorrenciaRepository extends JpaRepository<Ocorrencia, Long> {
+    // Métodos personalizados podem ser adicionados aqui, caso necessário
 }

@@ -1,57 +1,74 @@
-import br.com.itb.miniprojetospring.model.Laboratorio;
-import br.com.itb.miniprojetospring.model.LaboratorioRepository;
+package br.com.itb.miniprojetospring.control;
+
 import br.com.itb.miniprojetospring.model.Ocorrencia;
-import br.com.itb.miniprojetospring.model.OcorrenciaRepository;
+import br.com.itb.miniprojetospring.service.OcorrenciaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDateTime;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173", maxAge = 3600, allowCredentials = "false")
 @RequestMapping("/ocorrencias")
 public class OcorrenciaController {
 
     @Autowired
-    private OcorrenciaRepository ocorrenciaRepository;
+    private OcorrenciaService ocorrenciaService;
 
-    @Autowired
-    private LaboratorioRepository laboratorioRepository;
+    // Criar/Atualizar uma ocorrência
+    @PostMapping("/upload")
+    public String uploadOcorrencia(@RequestBody Ocorrencia ocorrencia) {
+        try {
+            // Verificar se a dataAtendimento está nula e definir com a data e hora atual
+            if (ocorrencia.getDataAtendimento() == null) {
+                ocorrencia.setDataAtendimento(LocalDateTime.now());
+            }
 
-    @GetMapping
-    public List<Ocorrencia> getAllOcorrencias() {
-        return ocorrenciaRepository.findAll();
+            // Salvar ou atualizar a ocorrência
+            ocorrenciaService.save(ocorrencia);
+
+            return "Ocorrência cadastrada/atualizada com sucesso!";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Erro ao cadastrar/atualizar ocorrência: " + e.getMessage();
+        }
     }
 
-    // Novo endpoint com upload de arquivo
-    @PostMapping("/upload")
-    public Ocorrencia uploadOcorrencia(
-            @RequestParam("descricao") String descricao,
-            @RequestParam("patrimonio") String patrimonio,
-            @RequestParam("laboratorioId") long laboratorioId,
-            @RequestParam(value = "anexo", required = false) MultipartFile anexoFile
-    ) throws IOException {
+    // Consultar ocorrência por ID
+    @GetMapping("/{id}")
+    public Ocorrencia getOcorrenciaById(@PathVariable Long id) {
+        return ocorrenciaService.findById(id);
+    }
 
-        Optional<Laboratorio> laboratorio = laboratorioRepository.findById(laboratorioId);
-        if (!laboratorio.isPresent()) {
-            throw new RuntimeException("Laboratório não encontrado");
+    // Listar todas as ocorrências
+    @GetMapping
+    public Iterable<Ocorrencia> getAllOcorrencias() {
+        return ocorrenciaService.findAll();
+    }
+
+    // Deletar ocorrência por ID
+    @DeleteMapping("/{id}")
+    public String deleteOcorrencia(@PathVariable Long id) {
+        try {
+            ocorrenciaService.delete(id);
+            return "Ocorrência deletada com sucesso!";
+        } catch (Exception e) {
+            return "Erro ao deletar ocorrência: " + e.getMessage();
         }
+    }
 
-        Ocorrencia ocorrencia = new Ocorrencia();
-        ocorrencia.setDescricao(descricao);
-        ocorrencia.setPatrimonio(patrimonio);
-        ocorrencia.setLaboratorio(laboratorio.get());
-        ocorrencia.setDataAbertura(LocalDate.now().toString());
-        ocorrencia.setStatusOcorrencia("Pendente");
-
-        if (anexoFile != null && !anexoFile.isEmpty()) {
-            ocorrencia.setAnexo(anexoFile.getBytes());
+    // Atualizar status de ocorrência para 'lida'
+    @PutMapping("/{id}/marcar-lida")
+    public String marcarComoLida(@PathVariable Long id) {
+        try {
+            Ocorrencia ocorrencia = ocorrenciaService.findById(id);
+            if (ocorrencia != null) {
+                ocorrencia.setLida(true);  // Marca como 'lida'
+                ocorrenciaService.save(ocorrencia);  // Atualiza no banco
+                return "Ocorrência marcada como lida!";
+            }
+            return "Ocorrência não encontrada!";
+        } catch (Exception e) {
+            return "Erro ao marcar ocorrência como lida: " + e.getMessage();
         }
-
-        return ocorrenciaRepository.save(ocorrencia);
     }
 }
