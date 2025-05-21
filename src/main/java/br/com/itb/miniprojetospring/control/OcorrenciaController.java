@@ -18,31 +18,38 @@ public class OcorrenciaController {
     @PostMapping("/upload")
     public String uploadOcorrencia(@RequestBody Ocorrencia ocorrencia) {
         try {
-            // Verificar se a dataAtendimento está nula e definir com a data e hora atual
+            // Definir a data de atendimento se não estiver definida
             if (ocorrencia.getDataAtendimento() == null) {
                 ocorrencia.setDataAtendimento(LocalDateTime.now());
             }
 
             // Salvar ou atualizar a ocorrência
+            ocorrencia.setStatus("PENDENTE");  // Status inicial como "PENDENTE"
             ocorrenciaService.save(ocorrencia);
 
-            return "Ocorrência cadastrada/atualizada com sucesso!";
+            return "Ocorrência cadastrada com sucesso!";
         } catch (Exception e) {
             e.printStackTrace();
             return "Erro ao cadastrar/atualizar ocorrência: " + e.getMessage();
         }
     }
 
+    // Consultar todas as ocorrências pendentes
+    @GetMapping("/pendentes")
+    public Iterable<Ocorrencia> getPendentes() {
+        return ocorrenciaService.findPendentes();
+    }
+
+    // Consultar todas as ocorrências solucionadas
+    @GetMapping("/solucionadas")
+    public Iterable<Ocorrencia> getSolucionadas() {
+        return ocorrenciaService.findSolucionadas();
+    }
+
     // Consultar ocorrência por ID
     @GetMapping("/{id}")
     public Ocorrencia getOcorrenciaById(@PathVariable Long id) {
         return ocorrenciaService.findById(id);
-    }
-
-    // Listar todas as ocorrências
-    @GetMapping
-    public Iterable<Ocorrencia> getAllOcorrencias() {
-        return ocorrenciaService.findAll();
     }
 
     // Deletar ocorrência por ID
@@ -56,19 +63,14 @@ public class OcorrenciaController {
         }
     }
 
-    // Atualizar status de ocorrência para 'lida'
+    // Atualizar status da ocorrência para 'SOLUCIONADA'
     @PutMapping("/{id}/marcar-lida")
-    public String marcarComoLida(@PathVariable Long id) {
+    public String marcarComoSolucionada(@PathVariable Long id) {
         try {
-            Ocorrencia ocorrencia = ocorrenciaService.findById(id);
-            if (ocorrencia != null) {
-                ocorrencia.setLida(true);  // Marca como 'lida'
-                ocorrenciaService.save(ocorrencia);  // Atualiza no banco
-                return "Ocorrência marcada como lida!";
-            }
-            return "Ocorrência não encontrada!";
+            ocorrenciaService.marcarComoSolucionada(id);
+            return "Ocorrência marcada como solucionada!";
         } catch (Exception e) {
-            return "Erro ao marcar ocorrência como lida: " + e.getMessage();
+            return "Erro ao marcar ocorrência como solucionada: " + e.getMessage();
         }
     }
 }
