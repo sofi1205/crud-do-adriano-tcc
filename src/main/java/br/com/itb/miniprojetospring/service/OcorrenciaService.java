@@ -24,13 +24,28 @@ public class OcorrenciaService {
         return ocorrencia.orElse(null);  // Retorna null se não encontrar
     }
 
-    // Buscar todas as ocorrências
-    public Iterable<Ocorrencia> findAll() {
-        return ocorrenciaRepository.findAll();
+    // Buscar todas as ocorrências com status "PENDENTE"
+    public Iterable<Ocorrencia> findPendentes() {
+        return ocorrenciaRepository.findByStatus("PENDENTE");
+    }
+
+    // Buscar todas as ocorrências com status "SOLUCIONADA"
+    public Iterable<Ocorrencia> findSolucionadas() {
+        return ocorrenciaRepository.findByStatus("SOLUCIONADA");
     }
 
     // Deletar ocorrência por ID
     public void delete(Long id) {
         ocorrenciaRepository.deleteById(id);
+    }
+
+    // Atualizar status da ocorrência para 'SOLUCIONADA'
+    public void marcarComoSolucionada(Long id) {
+        Ocorrencia ocorrencia = findById(id);
+        if (ocorrencia != null) {
+            ocorrencia.setStatus("SOLUCIONADA");
+            ocorrencia.setLida(true); // Marca como 'lida'
+            save(ocorrencia);
+        }
     }
 }
