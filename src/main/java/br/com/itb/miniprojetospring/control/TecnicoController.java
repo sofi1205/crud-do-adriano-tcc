@@ -41,10 +41,8 @@ public class TecnicoController {
             tecnico.setRmtecnico(tecnicoAtualizado.getRmtecnico());
             tecnico.setSenha(tecnicoAtualizado.getSenha());
             tecnico.setAdmin(tecnicoAtualizado.isAdmin());
-            tecnico.setIdOcorrencia(tecnicoAtualizado.getIdOcorrencia());
             return tecnicoRepository.save(tecnico);
         }).orElseGet(() -> {
-            tecnicoAtualizado.setIdOcorrencia(id);
             return tecnicoRepository.save(tecnicoAtualizado);
         });
     }

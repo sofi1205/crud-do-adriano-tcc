@@ -20,9 +20,6 @@ public class Tecnico {
     @Column(name = "is_admin", nullable = false)
     private boolean isAdmin;
 
-    @Column(name = "Id_Ocorrencia")
-    private Long idOcorrencia;
-
     // Construtor vazio
     public Tecnico() {}
 
@@ -35,8 +32,5 @@ public class Tecnico {
 
     public boolean isAdmin() { return isAdmin; }
     public void setAdmin(boolean admin) { this.isAdmin = admin; }
-
-    public long getIdOcorrencia() { return idOcorrencia; }
-    public void setIdOcorrencia(long idOcorrencia) { this.idOcorrencia = idOcorrencia; }
 
 }

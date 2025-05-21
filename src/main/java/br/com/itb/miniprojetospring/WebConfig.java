@@ -13,7 +13,6 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**")  // Permite CORS para todos os endpoints
                 .allowedOriginPatterns("http://localhost:5173")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")  // Métodos permitidos
-                .allowedHeaders("*")
-                .allowCredentials(true);
+                .allowedHeaders("*");
     }
 }
