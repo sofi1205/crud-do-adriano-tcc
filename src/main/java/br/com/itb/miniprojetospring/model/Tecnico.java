@@ -11,7 +11,7 @@ public class Tecnico {
     @Column(name = "Id_Tecnico")
     private Long id;
 
-    @Column(name = "rmtecnico", nullable = false)
+    @Column(name = "rmtecnico", nullable = false, unique = true)
     private String rmtecnico;
 
     @Column(name = "senha", nullable = false)
