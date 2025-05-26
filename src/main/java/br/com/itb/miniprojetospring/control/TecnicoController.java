@@ -3,6 +3,7 @@ package br.com.itb.miniprojetospring.control;
 import br.com.itb.miniprojetospring.model.Tecnico;
 import br.com.itb.miniprojetospring.model.TecnicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,9 +31,35 @@ public class TecnicoController {
 
     // CADASTRAR novo técnico
     @PostMapping
-    public Tecnico cadastrar(@RequestBody Tecnico tecnico) {
-        return tecnicoRepository.save(tecnico);
+    public ResponseEntity<?> cadastrar(@RequestBody Tecnico tecnico) {
+        Optional<Tecnico> tecnicoExistente = tecnicoRepository.findByrmtecnico(tecnico.getRmtecnico());
+
+        if (tecnicoExistente.isPresent()) {
+            return ResponseEntity
+                    .badRequest()
+                    .body("RM já cadastrado. Tente outro.");
+        }
+
+        Tecnico novoTecnico = tecnicoRepository.save(tecnico);
+        return ResponseEntity.ok(novoTecnico);
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody Tecnico tecnico) {
+        Optional<Tecnico> tecnicoExistente = tecnicoRepository.findByrmtecnico(tecnico.getRmtecnico());
+
+        if (tecnicoExistente.isPresent()) {
+            Tecnico t = tecnicoExistente.get();
+            if (t.getSenha().equals(tecnico.getSenha())) {
+                return ResponseEntity.ok(t); // login OK, retorna os dados do técnico
+            } else {
+                return ResponseEntity.status(401).body("Senha incorreta");
+            }
+        } else {
+            return ResponseEntity.status(401).body("RM não cadastrado");
+        }
+    }
+
 
     // ATUALIZAR técnico
     @PutMapping("/{id}")
