@@ -17,8 +17,8 @@ public class Tecnico {
     @Column(name = "senha", nullable = false)
     private String senha;
 
-    @Column(name = "is_admin", nullable = false)
-    private boolean isAdmin;
+    @Column(name = "is_admin")  // mapeia o campo do banco "is_admin"
+    private boolean admin;
 
     // Construtor vazio
     public Tecnico() {}
@@ -30,7 +30,6 @@ public class Tecnico {
     public String getSenha() { return senha; }
     public void setSenha(String senha) { this.senha = senha; }
 
-    public boolean isAdmin() { return isAdmin; }
-    public void setAdmin(boolean admin) { this.isAdmin = admin; }
-
+    public boolean isAdmin() {return admin;}
+    public void setAdmin(boolean admin) {this.admin = admin;}
 }
